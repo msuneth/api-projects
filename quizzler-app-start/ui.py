@@ -33,14 +33,33 @@ class QuizUI:
         self.window.mainloop()
 
     def right_button_clicked(self):
-        pass
+        status = self.quiz.check_answer("true")
+        self.give_feedback(status)
 
     def wrong_button_clicked(self):
-        pass
+        status = self.quiz.check_answer("false")
+        self.give_feedback(status)
 
     def show_next_question(self):
-        q_text = self.quiz.next_question()
-        self.canvas.itemconfig(self.question_text, text=q_text)
+        self.canvas.config(bg="white")
+        if self.quiz.still_has_questions():
+            q_text = self.quiz.next_question()
+            self.score_label.config(text=f"Score: {self.score}")
+            self.canvas.itemconfig(self.question_text, text=q_text)
+        else:
+            self.canvas.itemconfig(self.question_text,
+                                   text=f"You have finished the quiz.\n\nFinal Score: {self.score}")
+            self.right_button.config(state="disabled")
+            self.wrong_button.config(state="disabled")
+
+    def give_feedback(self,status: bool):
+        if status:
+            self.canvas.config(bg="green")
+            self.score += 1
+        else:
+            self.canvas.config(bg="red")
+        self.window.after(1000, self.show_next_question)
+
 
 # #
 # # flip_timer = window.after(100, display_random_word)
