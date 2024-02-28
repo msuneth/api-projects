@@ -22,12 +22,42 @@ stock_parameters = {
     "outputsize": "compact",
 }
 
+day_count = 1
+
+
+def get_previous_day_stock_price(response_data: json):
+    global day_count
+    day1 = date.today() - timedelta(days=day_count)
+    day_stock_price = 0.0
+    try:
+        #day_stock_price: float = float(response_data["Time Series (Daily)"][str(day1)]['4. close'])
+        day_stock_price: float = float(response_data["Time Series (Daily)"][str(day1)]['1. open'])
+    except ValueError:
+        day_count += 1
+        get_previous_day_stock_price(response_data)
+    finally:
+        day_count += 1
+        return day_stock_price
+    # #yesterday_stock_price = data["Time Series (Daily)"][str(yesterday)]['1. open']
+    # print(data)
+
+
 stock_response = requests.get(url="https://www.alphavantage.co/query",params=stock_parameters)
 stock_response.raise_for_status()
 data = stock_response.json()
-yesterday = date.today() - timedelta(days=1)
-yesterday_data = data["Time Series (Daily)"][str(yesterday)]
 print(data)
+day1_stock_price = get_previous_day_stock_price(data)
+day2_stock_price = get_previous_day_stock_price(data)
+print(day1_stock_price)
+print(day2_stock_price)
+diff = day2_stock_price - day1_stock_price
+print(diff)
+stock_difference_percentage = diff * 100/day1_stock_price
+absolute_value = abs(stock_difference_percentage)
+print(absolute_value)
+if absolute_value > 5:
+    print("Get news")
+
 
 # day_before_yesterday = date.today() - timedelta(days=2)
 # day_before_yesterday_data = data["Time Series (Daily)"][str(day_before_yesterday)]
@@ -37,7 +67,7 @@ print(data)
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 
 
-news_response = requests.get(url=)
+#news_response = requests.get(url=)
 ## STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
