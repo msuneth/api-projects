@@ -13,7 +13,7 @@ SENDER = config_data['email']['sender']
 RECEIVER = config_data['email']['receiver']
 PASSWORD = config_data['email']['password']
 stock_apikey = config_data['api_keys']['stockapi']
-news_api = config_data['api_keys']['newsapi']
+news_apikey = config_data['api_keys']['newsapi']
 
 stock_parameters = {
     "apikey": stock_apikey,
@@ -21,6 +21,8 @@ stock_parameters = {
     "symbol": "TSLA",
     "outputsize": "compact",
 }
+
+
 
 day_count = 1
 
@@ -42,6 +44,20 @@ def get_previous_day_stock_price(response_data: json):
     # print(data)
 
 
+def get_news():
+    news_parameters = {
+        "apiKey": news_apikey,
+        "q": COMPANY_NAME,
+        "language": "en",
+        "sortBy": "relevancy",
+        "searchIn": "title"
+    }
+    news_response = requests.get(url="https://newsapi.org/v2/everything",params=news_parameters)
+    news_response.raise_for_status()
+    news_data = news_response.json()
+    print(news_data)
+
+
 stock_response = requests.get(url="https://www.alphavantage.co/query",params=stock_parameters)
 stock_response.raise_for_status()
 data = stock_response.json()
@@ -57,17 +73,13 @@ absolute_value = abs(stock_difference_percentage)
 print(absolute_value)
 if absolute_value > 5:
     print("Get news")
+    get_news()
 
 
-# day_before_yesterday = date.today() - timedelta(days=2)
-# day_before_yesterday_data = data["Time Series (Daily)"][str(day_before_yesterday)]
-# print(day_before_yesterday_data)
-
-## STEP 1: Use https://www.alphavantage.co
-# When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 
 
-#news_response = requests.get(url=)
+
+
 ## STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
