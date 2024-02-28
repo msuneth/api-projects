@@ -89,8 +89,11 @@ stock_response = requests.get(url="https://www.alphavantage.co/query", params=st
 stock_response.raise_for_status()
 data = stock_response.json()
 print(data)
-day1_stock_price = get_previous_day_stock_price(data)
-day2_stock_price = get_previous_day_stock_price(data)
+data_list = [value for key, value in data['Time Series (Daily)'].items()]
+#day1_stock_price = get_previous_day_stock_price(data)
+day1_stock_price = float(data_list[0]['4. close'])
+#day2_stock_price = get_previous_day_stock_price(data)
+day2_stock_price = float(data_list[1]['4. close'])
 print(day1_stock_price)
 print(day2_stock_price)
 diff = day2_stock_price - day1_stock_price
