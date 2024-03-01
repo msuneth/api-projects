@@ -1,7 +1,14 @@
 import requests
+import json
 
-user_info = {"token": "asuqksudajj1982jjj2auaj1717jaj",
-             "username": "suneth",
+with open('../config.json') as f:
+    config_data = json.load(f)
+
+# Access database configuration
+pixela_token = config_data["pixela"]["token"]
+pixela_username = config_data["pixela"]["username"]
+user_info = {"token": pixela_token,
+             "username": pixela_username,
              "agreeTermsOfService": "yes",
              "notMinor": "yes"
              }
