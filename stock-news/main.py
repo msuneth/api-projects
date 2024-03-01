@@ -94,13 +94,10 @@ data_list = [value for key, value in data['Time Series (Daily)'].items()]
 day1_stock_price = float(data_list[0]['4. close'])
 #day2_stock_price = get_previous_day_stock_price(data)
 day2_stock_price = float(data_list[1]['4. close'])
-print(day1_stock_price)
-print(day2_stock_price)
 diff = day2_stock_price - day1_stock_price
 print(diff)
 stock_difference_percentage = diff * 100 / day1_stock_price
 if stock_difference_percentage > 5 or stock_difference_percentage < -5:
-    print("Get news")
     news_info = get_news()
     send_email(stock_difference_percentage, news_info)
 
