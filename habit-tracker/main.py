@@ -15,3 +15,17 @@ user_info = {"token": pixela_token,
 
 response = requests.post(url="https://pixe.la/v1/users", json=user_info)
 print(response.text)
+
+graph_endpoint = f"https://pixe.la/v1/users/{pixela_username}/graphs"
+headers = {
+    "X-USER-TOKEN": pixela_token
+}
+graph_config = {
+    "id":"code-graph",
+    "name":"code-graph",
+    "unit":"hours",
+    "type":"int",
+    "color":"shibafu"
+}
+graph_response = requests.post(url=graph_endpoint,headers=headers,json=graph_config)
+print(graph_response.text)
