@@ -1,5 +1,6 @@
 import requests
 import json
+from datetime import datetime
 
 with open('../config.json') as f:
     config_data = json.load(f)
@@ -22,13 +23,13 @@ headers = {
 }
 graph_name = "code-graph"
 graph_config = {
-    "id":"code-graph",
+    "id": "code-graph",
     "name": graph_name,
-    "unit":"hours",
-    "type":"int",
-    "color":"shibafu"
+    "unit": "hours",
+    "type": "int",
+    "color": "shibafu"
 }
-graph_response = requests.post(url=graph_endpoint,headers=headers,json=graph_config)
+graph_response = requests.post(url=graph_endpoint, headers=headers, json=graph_config)
 print(graph_response.text)
 
 graph_name = "code-graph"
@@ -37,9 +38,11 @@ headers = {
     "X-USER-TOKEN": pixela_token
 }
 
+today = datetime.now().strftime("%Y%m%d")
+print(today)
 graph_pixel_config = {
-    "date": "20240221",
+    "date": today,
     "quantity": "5",
 }
-graph_response = requests.post(url=graph_pixel_endpoint,headers=headers,json=graph_pixel_config)
+graph_response = requests.post(url=graph_pixel_endpoint, headers=headers, json=graph_pixel_config)
 print(graph_response.text)
