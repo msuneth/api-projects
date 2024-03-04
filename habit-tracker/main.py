@@ -1,3 +1,5 @@
+import random
+
 import requests
 import json
 from datetime import datetime, timedelta
@@ -21,6 +23,7 @@ def pixel_create_user(username: str, token: str):
 
 
 pixel_create_user(pixela_username, pixela_token)
+
 headers = {
     "X-USER-TOKEN": pixela_token
 }
@@ -74,3 +77,7 @@ yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
 graph_pixel_add(yesterday, 10)
 graph_pixel_update(yesterday, 2)
 graph_pixel_delete(yesterday)
+
+for i in range(1,20):
+    previous_day = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
+    graph_pixel_add(yesterday, random.randint(5,20))
