@@ -11,7 +11,6 @@ GRAPH_NAME = "code-graph"
 pixela_token = config_data["pixela"]["token"]
 pixela_username = config_data["pixela"]["username"]
 
-
 def pixel_create_user(username: str, token: str):
     user_info = {"token": token,
                  "username": username,
@@ -78,6 +77,6 @@ graph_pixel_add(yesterday, 10)
 graph_pixel_update(yesterday, 2)
 graph_pixel_delete(yesterday)
 
-for i in range(1,20):
+for i in range(20,50):
     previous_day = (datetime.now() - timedelta(days=i)).strftime("%Y%m%d")
     graph_pixel_add(yesterday, random.randint(5,20))
