@@ -23,7 +23,18 @@ data = {
 }
 
 response = requests.post(url="https://trackapi.nutritionix.com/v2/natural/exercise",
-                         headers=header_para,json=data)
+                         headers=header_para, json=data)
 response.raise_for_status()
 print(response.json)
 print(response.text)
+
+sheet_bearer_token = config_data["sheet"]["bearer_token"]
+sheet_apikey = config_data["sheet"]["apikey"]
+
+auth_header = {
+    "Authorization": sheet_bearer_token
+}
+
+sheet_response = requests.get(url=f"https://api.sheety.co/{sheet_apikey}/myWorkouts2024/workouts"
+                               , headers=auth_header)
+print(sheet_response.text)
