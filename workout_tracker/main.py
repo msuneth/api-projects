@@ -25,7 +25,7 @@ response = requests.post(url="https://trackapi.nutritionix.com/v2/natural/exerci
                          headers=header_para, json=data)
 response.raise_for_status()
 response_data = response.json()
-workout_name = response_data["exercises"][0]["name"]
+workout_name = response_data["exercises"][0]["name"].title()
 workout_duration = response_data["exercises"][0]["duration_min"]
 workout_calories = response_data["exercises"][0]["nf_calories"]
 
