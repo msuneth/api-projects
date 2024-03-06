@@ -1,28 +1,37 @@
 import requests
 import os
 from twilio.rest import Client
+import json
 
-account_sid = os.environ.get("account_sid")
-print(account_sid)
-auth_token = os.environ.get("auth_token")
-appid = os.environ.get("appid")
+with open('../config.json') as f:
+    config_data = json.load(f)
 
-parameters = {
-    "appid": appid,
-    "lat": 7.383017,
-    "lon": 79.845523,
-    "cnt": 4,
-}
+account_sid = config_data["twilio"]["account_sid"]
+auth_token = config_data["twilio"]["auth_token"]
 
-response = requests.get(url="https://api.openweathermap.org/data/2.5/forecast",params=parameters)
-response.raise_for_status()
-data = response.json()
-#print(data['list'][0]['weather'][0]['id'])
-is_rain = False
-for item in data['list']:
-    print(item['weather'][0]['id'])
-    if item['weather'][0]['id'] < 900:
-        is_rain = True
+# account_sid = os.environ.get("account_sid")
+# print(account_sid)
+# auth_token = os.environ.get("auth_token")
+# appid = os.environ.get("appid")
+
+# parameters = {
+#     "appid": appid,
+#     "lat": 7.383017,
+#     "lon": 79.845523,
+#     "cnt": 4,
+# }
+#
+# response = requests.get(url="https://api.openweathermap.org/data/2.5/forecast",params=parameters)
+# response.raise_for_status()
+# data = response.json()
+# #print(data['list'][0]['weather'][0]['id'])
+# is_rain = False
+# for item in data['list']:
+#     print(item['weather'][0]['id'])
+#     if item['weather'][0]['id'] < 900:
+#         is_rain = True
+
+is_rain = True
 if is_rain:
     print("Bring umbrella")
     client = Client(account_sid, auth_token)
