@@ -2,13 +2,6 @@ import requests
 import json
 
 
-# from datetime import datetime, timedelta
-#
-
-#
-# nutritionix_apikey = config_data["nutritionix"]["API_KEY"]
-# nutritionix_appid = config_data["nutritionix"]["APP_ID"]
-
 class DataManager:
     # This class is responsible for talking to the Google Sheet.
     def __init__(self):
@@ -37,15 +30,3 @@ class DataManager:
                                        , headers=self.auth_header, json=data)
         return sheet_response
 
-    #
-    # workouts = response_data["exercises"]
-    # for workout in workouts:
-    #     workout_name = workout["name"].title()
-    #     workout_duration = workout["duration_min"]
-    #     workout_calories = workout["nf_calories"]
-    #     print(response_data)
-    #     today = datetime.now().strftime("%d/%m/%Y")
-    #     print(today)
-    #     time_now = datetime.now().strftime("%H:%M:%S")
-    #     print(time_now)
-    #
