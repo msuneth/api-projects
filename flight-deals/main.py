@@ -12,3 +12,5 @@ data = {"price": {
     "lowestPrice": "1000"
 }}
 print(data_manager.write_excel(data).json())
+print(data_manager.update_excel(data,11).json())
+

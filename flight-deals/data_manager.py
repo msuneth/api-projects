@@ -27,24 +27,15 @@ class DataManager:
                                        , headers=self.auth_header)
         return sheet_response
 
-    def write_excel(self, data):
+    def update_excel(self, data, change_id):
+        sheet_response = requests.put(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices/{change_id}"
+                                       , headers=self.auth_header, json=data)
+        return sheet_response
+
+    def write_excel(self,data):
         sheet_response = requests.post(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices"
                                        , headers=self.auth_header, json=data)
         return sheet_response
-        # data = {"price": {
-        #     "date": today,
-        #     "time": time_now,
-        #     "exercise": workout_name,
-        #     "duration": workout_duration,
-        #     "calories": workout_calories
-        # }}
-        #
-        # sheet_response = requests.post(url=f"https://api.sheety.co/{sheet_apikey}/myWorkouts2024/workouts"
-        #                                , headers=auth_header, json=data)
-        # print(sheet_response.text)
-
-    def update_excel(self):
-        pass
 
     #
     # workouts = response_data["exercises"]
