@@ -27,8 +27,10 @@ class DataManager:
                                        , headers=self.auth_header)
         return sheet_response
 
-    def write_excel(self):
-        pass
+    def write_excel(self, data):
+        sheet_response = requests.post(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices"
+                                       , headers=self.auth_header, json=data)
+        return sheet_response
         # data = {"price": {
         #     "date": today,
         #     "time": time_now,
