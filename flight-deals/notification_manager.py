@@ -1,4 +1,5 @@
 import json
+from twilio.rest import Client
 
 
 class NotificationManager:
@@ -18,4 +19,10 @@ class NotificationManager:
         pass
 
     def send_sms(self, receiver, message):
-        pass
+        client = Client(self.sms_account_sid, self.sms_auth_token)
+        message = client.messages.create(
+            body=message,
+            from_='+19309662195',
+            to=receiver
+        )
+        return message.sid
