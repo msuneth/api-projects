@@ -17,6 +17,7 @@ data = {"price": {
 # print(data_manager.write_excel(data).json())
 # print(data_manager.update_excel(data,11).json())
 notifications = NotificationManager()
-notifications.send_sms("+94770675528","Test SMS")
+#notifications.send_sms("+94770675528","Test SMS")
+notifications.send_email("msuneth@gmail.com","Subject:Test\n\nTest")
 
 

@@ -1,5 +1,6 @@
 import json
 from twilio.rest import Client
+import smtplib
 
 
 class NotificationManager:
@@ -16,7 +17,13 @@ class NotificationManager:
         self.sms_sender_mob = config_data["twilio"]["sender_mob"]
 
     def send_email(self, receiver, message):
-        pass
+        with smtplib.SMTP(self.email_host, self.email_port) as connection:
+            connection.starttls()
+            connection.login(user=self.email_sender, password=self.email_password)
+            connection.sendmail(
+                from_addr=self.email_sender,
+                to_addrs=receiver,
+                msg=message)
 
     def send_sms(self, receiver, message):
         client = Client(self.sms_account_sid, self.sms_auth_token)
