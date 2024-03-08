@@ -2,6 +2,9 @@
 # NotificationManager classes to achieve the program requirements.
 
 from data_manager import DataManager
+from flight_search import FlightSearch
+from notification_manager import NotificationManager
+from flight_data import FlightData
 
 data_manager = DataManager()
 print(data_manager.read_excel().json())
