@@ -8,3 +8,5 @@ class FlightSearch:
             config_data = json.load(f)
         self.flight_search_api_token = config_data["flight-search"]["host"]
 
+    def search_iata_by_city(self,city):
+        pass
