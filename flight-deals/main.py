@@ -6,19 +6,32 @@ from flight_search import FlightSearch
 from notification_manager import NotificationManager
 from flight_data import FlightData
 
+# read excel data
 data_manager = DataManager()
-print(data_manager.read_excel().json())
+excel_data = data_manager.read_excel().json()
+print(excel_data)
 
-data = {"price": {
-    "city": "Colombo",
-    "iataCode": "Test",
-    "lowestPrice": "1000"
-}}
-
+# update data in excel
 flight_info = FlightSearch()
-print(flight_info.search_iata_by_city("Colombo"))
+for index, item in enumerate(excel_data["prices"]):
+    print(index,item["city"])
+    iata_code = flight_info.search_iata_by_city(item["city"])
+    item['iataCode'] = iata_code
+    data = {"price": {
+        "city": item["city"],
+        "iataCode": iata_code,
+        "lowestPrice": "1000"
+    }}
+    data_manager.update_excel(data, index+2)
+
+print(excel_data)
+
+
+# print(data_manager.update_excel(data, 11).json())
+
 # print(data_manager.write_excel(data).json())
-# print(data_manager.update_excel(data,11).json())
+#
+
 # notifications = NotificationManager()
 # #notifications.send_sms("+94770675528","Test SMS")
 # notifications.send_email("msuneth@gmail.com","Subject:Test\n\nTest")
