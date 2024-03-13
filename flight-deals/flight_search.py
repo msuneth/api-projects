@@ -1,5 +1,6 @@
 import json
 import requests
+from flight_data import FlightData
 
 
 class FlightSearch:
@@ -13,6 +14,23 @@ class FlightSearch:
         url = "https://api.tequila.kiwi.com/locations/query"
         parameters = {
             "term": city,
+            "location_types": "city"
+        }
+        headers = {
+            "accept": "application/json",
+            "apikey": self.flight_search_api_key
+        }
+        response = requests.get(url=url, headers=headers, params=parameters)
+        return response.json()["locations"][0]["code"]
+
+    def get_lowest_rate_for_destination(self,origin_city: str,flight_data: FlightData):
+        #list_of_rates = self.get_all_rates_for_destination(origin_city,flight_data)
+        return "2500"
+
+    def get_all_rates_for_destination(self,origin_city: str,flight_data: FlightData):
+        url = "https://api.tequila.kiwi.com/locations/query"
+        parameters = {
+           # "term": city,
             "location_types": "city"
         }
         headers = {
