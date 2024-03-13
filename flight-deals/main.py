@@ -10,12 +10,17 @@ from flight_data import FlightData
 data_manager = DataManager()
 excel_data = data_manager.read_excel().json()
 print(excel_data)
-
+origin_city = "London"
 # update data in excel
 flight_info = FlightSearch()
 for index, item in enumerate(excel_data["prices"]):
-    print(index,item["city"])
-    iata_code = flight_info.search_iata_by_city(item["city"])
+    print(index,item["city"],item["iataCode"])
+    if item["iataCode"] == "":
+        iata_code = flight_info.search_iata_by_city(item["city"])
+    else:
+        iata_code = item["iataCode"]
+    # flight_data = FlightData(1000,iata_code,item["city"])
+    # low_rates = flight_info.get_rates(origin_city,flight_data)
     item['iataCode'] = iata_code
     data = {"price": {
         "city": item["city"],
