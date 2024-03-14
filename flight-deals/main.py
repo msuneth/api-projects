@@ -10,7 +10,7 @@ from flight_data import FlightData
 data_manager = DataManager()
 excel_data = data_manager.read_excel().json()
 print(excel_data)
-origin_city = "London"
+origin_city = "LON"
 # update data in excel
 flight_info = FlightSearch()
 for index, item in enumerate(excel_data["prices"]):
