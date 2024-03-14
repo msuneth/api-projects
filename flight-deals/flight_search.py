@@ -47,7 +47,8 @@ class FlightSearch:
             "fly_from": origin_city,
             "fly_to": flight_data.departure_airport_code,
             "date_from": from_date,
-            "date_to": to_date
+            "date_to": to_date,
+            "curr": flight_data.currency
         }
         headers = {
             "accept": "application/json",

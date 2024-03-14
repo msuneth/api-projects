@@ -11,25 +11,25 @@ data_manager = DataManager()
 excel_data = data_manager.read_excel().json()
 print(excel_data)
 origin_city = "LON"
+currency = "GBP"
 # update data in excel
 flight_info = FlightSearch()
 for index, item in enumerate(excel_data["prices"]):
-    print(index,item["city"],item["iataCode"])
+    print(index, item["city"], item["iataCode"])
     if item["iataCode"] == "":
         iata_code = flight_info.search_iata_by_city(item["city"])
     else:
         iata_code = item["iataCode"]
-    flight_data = FlightData(iata_code,item["city"])
-    low_rates = flight_info.get_lowest_rate_for_destination(origin_city,flight_data)
+    flight_data = FlightData(iata_code, item["city"], currency)
+    low_rates = flight_info.get_lowest_rate_for_destination(origin_city, flight_data)
     data = {"price": {
         "city": item["city"],
         "iataCode": iata_code,
-        "lowestPrice": low_rates
+        "lowestPrice": low_rates,
     }}
-    data_manager.update_excel(data, index+2)
+    data_manager.update_excel(data, index + 2)
 
 print(excel_data)
-
 
 # print(data_manager.update_excel(data, 11).json())
 
@@ -39,5 +39,3 @@ print(excel_data)
 # notifications = NotificationManager()
 # #notifications.send_sms("+94770675528","Test SMS")
 # notifications.send_email("msuneth@gmail.com","Subject:Test\n\nTest")
-
-
