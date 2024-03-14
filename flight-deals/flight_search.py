@@ -25,9 +25,12 @@ class FlightSearch:
         return response.json()["locations"][0]["code"]
 
     def get_lowest_rate_for_destination(self, origin_city: str, flight_data: FlightData):
-        list_of_rates = self.get_flights_for_destination(origin_city, flight_data)
-
-        return "2500"
+        list_of_flights = self.get_flights_for_destination(origin_city, flight_data)
+        lowest_rate = float(list_of_flights[0]['price'])
+        for item in list_of_flights:
+            if float(item['price']) < lowest_rate:
+                lowest_rate = item['price']
+        return lowest_rate
 
     def get_flights_for_destination(self, origin_city: str, flight_data: FlightData):
         url = "https://api.tequila.kiwi.com/v2/search"
@@ -51,5 +54,5 @@ class FlightSearch:
             "apikey": self.flight_search_api_key
         }
         response = requests.get(url=url, headers=headers, params=parameters)
-        res = response.json()
+        res = response.json()['data']
         return res
