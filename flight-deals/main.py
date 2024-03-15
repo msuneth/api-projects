@@ -21,13 +21,14 @@ for index, item in enumerate(excel_data["prices"]):
     else:
         iata_code = item["iataCode"]
     flight_data = FlightData(iata_code, item["city"], currency)
-    low_rates = flight_info.get_lowest_rate_for_destination(origin_city, flight_data)
-    data = {"price": {
-        "city": item["city"],
-        "iataCode": iata_code,
-        "lowestPrice": low_rates,
-    }}
-    data_manager.update_excel(data, index + 2)
+    if iata_code != "None":
+        low_rates = flight_info.get_lowest_rate_for_destination(origin_city, flight_data)
+        data = {"price": {
+            "city": item["city"],
+            "iataCode": iata_code,
+            "lowestPrice": low_rates,
+        }}
+        data_manager.update_excel(data, index + 2)
 
 print(excel_data)
 

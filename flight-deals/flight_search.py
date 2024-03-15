@@ -22,7 +22,11 @@ class FlightSearch:
             "apikey": self.flight_search_api_key
         }
         response = requests.get(url=url, headers=headers, params=parameters)
-        return response.json()["locations"][0]["code"]
+        try:
+            data = response.json()["locations"][0]["code"]
+            return data
+        except IndexError:
+            return "None"
 
     def get_lowest_rate_for_destination(self, origin_city: str, flight_data: FlightData):
         list_of_flights = self.get_flights_for_destination(origin_city, flight_data)
