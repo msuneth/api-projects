@@ -8,8 +8,12 @@ from flight_data import FlightData
 
 # read excel data
 data_manager = DataManager()
-excel_data = data_manager.read_excel().json()
-print(excel_data)
+try:
+    excel_data = data_manager.read_excel().json()
+    print(excel_data)
+except KeyError:
+    file_data = data_manager.read_file()
+    print(file_data)
 origin_city = "LON"
 currency = "GBP"
 # update data in excel
