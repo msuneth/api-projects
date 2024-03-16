@@ -15,18 +15,23 @@ class DataManager:
             "Authorization": self.sheet_bearer_token
         }
 
+    def read_file(self):
+        with open("filedata.txt") as file:
+            data = file.readlines()
+        return data
+
     def read_excel(self):
         sheet_response = requests.get(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices"
-                                       , headers=self.auth_header)
+                                      , headers=self.auth_header)
         return sheet_response
 
     def update_excel(self, data, change_id):
-        sheet_response = requests.put(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices/{change_id}"
-                                       , headers=self.auth_header, json=data)
+        sheet_response = requests.put(
+            url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices/{change_id}"
+            , headers=self.auth_header, json=data)
         return sheet_response
 
-    def write_excel(self,data):
+    def write_excel(self, data):
         sheet_response = requests.post(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices"
                                        , headers=self.auth_header, json=data)
         return sheet_response
-

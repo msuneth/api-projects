@@ -15,7 +15,7 @@ currency = "GBP"
 # update data in excel
 flight_info = FlightSearch()
 for index, item in enumerate(excel_data["prices"]):
-    print(index, item["city"], item["iataCode"])
+    print(index, item["city"])
     if item["iataCode"] == "":
         iata_code = flight_info.search_iata_by_city(item["city"])
     else:
