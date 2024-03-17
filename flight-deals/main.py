@@ -8,17 +8,19 @@ from flight_data import FlightData
 
 # read excel data
 data_manager = DataManager()
+flight_data = None
 try:
-    excel_data = data_manager.read_excel().json()
-    print(excel_data)
+    flight_data = data_manager.read_excel().json()
+    print(flight_data["prices"])
 except KeyError:
-    file_data = data_manager.read_file()
-    print(file_data)
+    flight_data = data_manager.read_file()
+    print(flight_data)
 origin_city = "LON"
 currency = "GBP"
 # update data in excel
 flight_info = FlightSearch()
-for index, item in enumerate(excel_data["prices"]):
+#for index, item in enumerate(flight_data["prices"]):
+for index, item in enumerate(flight_data):
     print(index, item["city"])
     if item["iataCode"] == "":
         iata_code = flight_info.search_iata_by_city(item["city"])
@@ -34,7 +36,7 @@ for index, item in enumerate(excel_data["prices"]):
         }}
         data_manager.update_excel(data, index + 2)
 
-print(excel_data)
+print(flight_data)
 
 # print(data_manager.update_excel(data, 11).json())
 

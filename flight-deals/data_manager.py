@@ -1,5 +1,6 @@
 import requests
 import json
+import pandas
 
 
 class DataManager:
@@ -16,9 +17,10 @@ class DataManager:
         }
 
     def read_file(self):
-        with open("filedata.txt") as file:
-            data = file.readlines()
-        return data
+        df = pandas.read_csv("flight_data.csv")
+        # with open("filedata.") as file:
+        #     data = file.readlines()
+        return df
 
     def read_excel(self):
         sheet_response = requests.get(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices"
