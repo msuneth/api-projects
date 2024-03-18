@@ -9,10 +9,13 @@ from flight_data import FlightData
 # read excel data
 data_manager = DataManager()
 flight_data = None
-try:
+data_source = "sheety"
+#data_source = "csv_file"
+
+if data_source == "sheety":
     flight_data = data_manager.read_excel().json()
     print(flight_data["prices"])
-except KeyError:
+else:
     flight_data = data_manager.read_file()
     print(flight_data)
 origin_city = "LON"
