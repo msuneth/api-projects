@@ -8,38 +8,53 @@ from flight_data import FlightData
 
 # read excel data
 data_manager = DataManager()
-flight_data = None
-data_source = "sheety"
-#data_source = "csv_file"
+#data_source = "sheety"
+data_source = "csv_file"
 
-if data_source == "sheety":
-    flight_data = data_manager.read_excel().json()
-    print(flight_data["prices"])
-else:
-    flight_data = data_manager.read_file()
-    print(flight_data)
 origin_city = "LON"
 currency = "GBP"
 # update data in excel
 flight_info = FlightSearch()
-#for index, item in enumerate(flight_data["prices"]):
-for index, item in enumerate(flight_data):
-    print(index, item["city"])
-    if item["iataCode"] == "":
-        iata_code = flight_info.search_iata_by_city(item["city"])
-    else:
-        iata_code = item["iataCode"]
-    flight_data = FlightData(iata_code, item["city"], currency)
-    if iata_code != "None":
-        low_rates = flight_info.get_lowest_rate_for_destination(origin_city, flight_data)
-        data = {"price": {
-            "city": item["city"],
-            "iataCode": iata_code,
-            "lowestPrice": low_rates,
-        }}
-        data_manager.update_excel(data, index + 2)
 
-print(flight_data)
+if data_source == "sheety":
+    flight_data = data_manager.read_excel().json()
+    print(flight_data["prices"])
+    for index, item in enumerate(flight_data["prices"]):
+        print(index, item["city"])
+        if item["iataCode"] == "":
+            iata_code = flight_info.search_iata_by_city(item["city"])
+        else:
+            iata_code = item["iataCode"]
+        flight_data = FlightData(iata_code, item["city"], currency)
+        if iata_code != "None":
+            low_rates = flight_info.get_lowest_rate_for_destination(origin_city, flight_data)
+            data = {"price": {
+                "city": item["city"],
+                "iataCode": iata_code,
+                "lowestPrice": low_rates,
+            }}
+            data_manager.update_excel(data, index + 2)
+else:
+    flight_data = data_manager.read_file()
+    print(flight_data)
+    for index, row in flight_data.iterrows():
+        print(row["City"])
+        if row["IATA Code"] == "":
+            iata_code = flight_info.search_iata_by_city(row["City"])
+        else:
+            iata_code = row["IATA Code"]
+        flight_data = FlightData(iata_code, row["IATA Code"], currency)
+        if iata_code != "None":
+            low_rates = flight_info.get_lowest_rate_for_destination(origin_city, flight_data)
+            data = {"price": {
+                "city": row["city"],
+                "iataCode": iata_code,
+                "lowestPrice": low_rates,
+            }}
+            #data_manager.write_file(data)
+
+
+#print(flight_data)
 
 # print(data_manager.update_excel(data, 11).json())
 
