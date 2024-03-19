@@ -22,12 +22,11 @@ class DataManager:
         #     data = file.readlines()
         return df
 
-
-    def write_file(self):
-        df = pandas.read_csv("flight_data.csv")
+    def write_file(self, df):
+        df.to_csv('flight_data.csv', index=False)
         # with open("filedata.") as file:
         #     data = file.readlines()
-        return df
+
 
     def read_excel(self):
         sheet_response = requests.get(url=f"https://api.sheety.co/{self.sheet_apikey}/flightDeals2024/prices"
