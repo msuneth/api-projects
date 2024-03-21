@@ -46,7 +46,8 @@ else:
         flight_data = FlightData(iata_code, row["IATA Code"], currency)
         if iata_code != "None":
             low_rates = flight_info.get_lowest_rate_for_destination(origin_city, flight_data)
-            flight_required_data.loc[index] = {'City': row["city"], 'IATA Code': iata_code, 'Lowest Price': low_rates}
+            print(low_rates)
+            flight_required_data.loc[index] = {'City': row["City"], 'IATA Code': iata_code, 'Lowest Price': low_rates}
             # data = {"price": {
             #     "city": row["city"],
             #     "iataCode": iata_code,
